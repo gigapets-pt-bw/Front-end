@@ -9,7 +9,6 @@ import logger from "redux-logger";
 import thunk from "redux-thunk";
 
 const store = createStore(rootReducer, applyMiddleware(thunk, logger));
-console.log("Heelo");
 
 ReactDOM.render(
   <Provider store={store}>
