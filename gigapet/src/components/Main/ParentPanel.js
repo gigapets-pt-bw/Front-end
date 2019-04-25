@@ -16,7 +16,7 @@ class ParentPanel extends Component {
   render() {
     return (
       <Panel>
-        <h2>Filler</h2>
+        <h2>Fillers</h2>
       </Panel>
     );
   }
