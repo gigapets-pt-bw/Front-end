@@ -2,12 +2,15 @@ import React from "react";
 import { connect } from "react-redux";
 import "./App.css";
 import Login from "./components/Login/Login";
+import { Route } from "react-router-dom";
+import ParentPanel from "./components/Main/ParentPanel";
 
 function App(props) {
   console.log(props.parents);
   return (
     <div className="App">
-      <Login />
+      <Route path="/home" component={ParentPanel} />
+      <Route exact path="/" render={props => <Login {...props} />} />
     </div>
   );
 }

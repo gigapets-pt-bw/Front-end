@@ -94,6 +94,7 @@ class Login extends React.Component {
   loginHandler = event => {
     event.preventDefault();
     this.props.login(this.state.login);
+    this.props.history.push("/home");
     this.setState({ login: { username: "", password: "" } });
   };
 
@@ -184,6 +185,7 @@ const mapStateToProps = state => {
     users: state.users
   };
 };
+
 export default connect(
   mapStateToProps,
   { login }
