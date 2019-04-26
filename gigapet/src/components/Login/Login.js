@@ -1,20 +1,17 @@
 import React from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
-import { login } from "../../actions";
+import { login, register } from "../../actions/index.js";
 
 const PageStyle = styled.div`
   height: 768px;
-  width: 1028px;
-  margin: 0 auto;
   background-image: url("http://worldartsme.com/images/forest-landscape-clipart-1.jpg");
   background-fill: no-repeat;
   background-size: cover;
+  background-position: 50% 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  .switch {
-  }
   form {
     opacity: 0.9;
     height: 60%;
@@ -73,8 +70,7 @@ class Login extends React.Component {
     },
     signup: {
       username: "",
-      password: "",
-      email: ""
+      password: ""
     },
     newSignup: false
   };
@@ -94,24 +90,16 @@ class Login extends React.Component {
   loginHandler = event => {
     event.preventDefault();
     this.props.login(this.state.login);
-    this.props.history.push("/home");
     this.setState({ login: { username: "", password: "" } });
   };
 
   signupHandler = event => {
     event.preventDefault();
-    if (
-      this.state.signup.username &&
-      this.state.signup.password &&
-      this.state.signup.email
-    ) {
-      this.setState({
-        signup: { username: "", password: "", email: "" },
-        newSignup: false
-      });
-    } else {
-      alert("All fields must have an entry");
-    }
+    this.props.register(this.state.signup);
+    this.setState({
+      signup: { username: "", password: ""},
+      newSignup: false
+    });
   };
 
   signupButton = event => {
@@ -120,73 +108,68 @@ class Login extends React.Component {
   };
 
   render() {
-    if (this.state.newSignup === false) {
-      return (
+    let loginform =
         <PageStyle>
-          <form onSubmit={this.loginHandler}>
-            <h2>Username</h2>
-            <input
-              type="text"
-              name="username"
-              placeholder="Username"
-              onChange={this.inputHandlerLogin}
-              value={this.state.login.username}
-            />
-            <h2>Password</h2>
-            <input
-              type="password"
-              name="password"
-              placeholder="Password"
-              onChange={this.inputHandlerLogin}
-              value={this.state.login.password}
-            />
-            <button>Log In</button>
-            <button onClick={this.signupButton}>Sign Up</button>
-          </form>
+                  <form onSubmit={this.loginHandler}>
+                    <h2>Username</h2>
+                    <input
+                      type="text"
+                      name="username"
+                      placeholder="Username"
+                      onChange={this.inputHandlerLogin}
+                      value={this.state.login.username}
+                    />
+                    <h2>Password</h2>
+                    <input
+                      type="text"
+                      name="password"
+                      placeholder="Password"
+                      onChange={this.inputHandlerLogin}
+                      value={this.state.login.password}
+                    />
+                    <button>Log In</button>
+                    <button onClick={this.signupButton}>Sign Up</button>
+                  </form>
         </PageStyle>
-      );
+    
+    let signupform =
+        <PageStyle>
+            <form onSubmit={this.signupHandler}>
+                <h2>Username</h2>
+                <input
+                  type="text"
+                  name="username"
+                  placeholder="Username"
+                  onChange={this.inputHandlerSignup}
+                  value={this.state.signup.username}
+                />
+                <h2>Password</h2>
+                <input
+                  type="text"
+                  name="password"
+                  placeholder="Password"
+                  onChange={this.inputHandlerSignup}
+                  value={this.state.signup.password}
+                />
+                <button>Create Account</button>
+              </form>
+        </PageStyle>
+        
+        return (
+          <>
+          { this.state.newSignup ? signupform : loginform }
+          </>
+        );
     }
-    return (
-      <PageStyle>
-        <form onSubmit={this.signupHandler}>
-          <h2>Username</h2>
-          <input
-            type="text"
-            name="username"
-            placeholder="Username"
-            onChange={this.inputHandlerSignup}
-            value={this.state.signup.username}
-          />
-          <h2>Password</h2>
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            onChange={this.inputHandlerSignup}
-            value={this.state.signup.password}
-          />
-          <h2>Email</h2>
-          <input
-            type="text"
-            name="email"
-            placeholder="Email"
-            onChange={this.inputHandlerSignup}
-            value={this.state.signup.email}
-          />
-          <button>Create Account</button>
-        </form>
-      </PageStyle>
-    );
-  }
 }
 
 const mapStateToProps = state => {
   return {
-    users: state.users
+    user: state.user
   };
 };
 
 export default connect(
   mapStateToProps,
-  { login }
+  { login, register }
 )(Login);
