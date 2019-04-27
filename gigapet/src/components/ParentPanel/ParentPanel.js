@@ -5,17 +5,15 @@ import { connect } from "react-redux";
 
 const Panel = styled.div`
   border: 1px solid black;
-  width: 75%;
+  width: 70vw;
   margin: 0 auto;
   display: flex;
   min-height: 370px;
   justify-content: space-between;
-  background-color: #00A6FB;
+  background-image: linear-gradient(#003D5C, #5CC6FC);
   border-radius: 10px;
   opacity: 0.875;
-  background-image: url("Background.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
+  padding-top: 20px;
   &:hover {
     opacity: 0.96;
     transition: 0.25s;
@@ -70,10 +68,10 @@ class ParentPanel extends Component {
         <Panel>
           <div className="user-panel">
             <div>
-              <img className="person" src="https://svgsilh.com/svg_v2/23874.svg"></img>
-              <h2>{`${this.props.user.username}'\s Console`}</h2>
+              <img className="person" src="https://svgsilh.com/svg_v2/23874.svg" alt="generic person logo"></img>
+              <h2>{`${this.props.user.username}'s Console`}</h2>
             </div>
-            <img className="animal" src="http://clipart-library.com/new_gallery/panda-clipart-11.png"></img>
+            <img className="animal" src="http://clipart-library.com/new_gallery/panda-clipart-11.png" alt="generic panda logo"></img>
           </div>
           <div className="child-panel">
             <button><i class="fas fa-plus-circle"></i>Create New Child</button>

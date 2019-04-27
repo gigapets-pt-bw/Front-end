@@ -40,7 +40,7 @@ const ChildBar = props => {
     return (
         <>
             <ChildBarStyle>
-                <p className="status">{`${props.name}\'s  Gigapet  ${props.petname}`}</p>
+                <p className="status">{`${props.name}'s  Gigapet  ${props.petname}`}</p>
                 <div className="view-child">
                     <i className="fas fa-eye"></i>
                     <p>View</p>

@@ -3,15 +3,15 @@ import styled from "styled-components";
 import { connect } from "react-redux";
 import { login, register } from "../../actions/index.js";
 
-const PageStyle = styled.div`
-  height: 768px;
+const PageStyle = styled.form`
+  height: 80%;
   display: flex;
   justify-content: center;
   align-items: center;
   form {
     opacity: 0.96;
-    height: 80%;
-    width: 50%;
+    height: 100%;
+    width: 40%;
     box-shadow: 5px 5px 4px 4px #696F71;
     border-radius: 12.5px;
     background-color: #31393c;
@@ -19,10 +19,16 @@ const PageStyle = styled.div`
     flex-wrap: wrap;
     justify-content: center;
     align-content: flex-start;
-    .logo {
-      align-self: flex-start;
-      width: 200px;
-      margin: 20px 100px 50px 100px;
+    .logo-wrapper {
+      display: flex;
+      justify-content: center;
+      align-content: flex-start;
+      width: 100%;
+      .logo {
+        width: 200px;
+        margin-top: 15px;
+        margin-bottom: 40px;
+      }
     }
     input {
       border-radius: 5px;
@@ -33,16 +39,16 @@ const PageStyle = styled.div`
       height: 10%;
       font-size: 18px;
       font-weight: bolder;
-      margin-bottom: 20px;
+      margin-bottom: 15px;
     }
     h2 {
       color: #8ac926;
       width: 45%;
-      font-size: 30px;
+      font-size: 26px;
       font-weight: bolder;
       align-self: center;
       margin-top: 5px;
-      margin-bottom: 20px;
+      margin-bottom: 10px;
     }
 
     button {
@@ -121,7 +127,9 @@ class Login extends React.Component {
     let loginform =
         <PageStyle>
                   <form onSubmit={this.loginHandler}>
-                    <img className="logo" src={process.env.PUBLIC_URL + '/GigaPet-Logo.png'} alt="GigaPet Logo"></img>
+                    <div class="logo-wrapper">
+                      <img className="logo" src={process.env.PUBLIC_URL + '/GigaPet-Logo.png'} alt="GigaPet Logo"></img>
+                    </div>
                     <h2>Username</h2>
                     <input
                       type="text"
@@ -146,7 +154,9 @@ class Login extends React.Component {
     let signupform =
         <PageStyle>
             <form onSubmit={this.signupHandler}>
-                <img className="logo" src={process.env.PUBLIC_URL + '/GigaPet-Logo.png'} alt="GigaPet Logo"></img>
+                <div class="logo-wrapper">
+                  <img className="logo" src={process.env.PUBLIC_URL + '/GigaPet-Logo.png'} alt="GigaPet Logo"></img>
+                </div>
                 <h2>Username</h2>
                 <input
                   type="text"
