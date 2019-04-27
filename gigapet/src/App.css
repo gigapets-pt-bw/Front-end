@@ -1,5 +1,9 @@
 .App {
   text-align: center;
+  background-image: url("Background.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100%;
 }
 
 .App-logo {
@@ -21,6 +25,10 @@
 
 .App-link {
   color: #61dafb;
+}
+
+iframe {
+  margin-bottom: 50px;
 }
 
 @keyframes App-logo-spin {
