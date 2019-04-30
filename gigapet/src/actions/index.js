@@ -13,13 +13,14 @@ export const REGISTER_START = "REGISTER_START";
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 export const REGISTER_FAILURE = "REGISTER_FAILURE";
 
-export const login = credentials => dispatch => {
+export const login = (credentials, redirect) => dispatch => {
   dispatch({ type: LOGIN_START });
     return axios
       .post("https://gigapets-pt-bw.herokuapp.com/api/login", credentials)
       .then(res => {
         localStorage.setItem("token", res.data.token);
-        dispatch({ type: LOGIN_SUCCESS });
+        dispatch({ type: LOGIN_SUCCESS, payload: res.data });
+        redirect();
       })
       .catch(err => {
         if (err) {
@@ -29,13 +30,14 @@ export const login = credentials => dispatch => {
       });
 };
 
-export const register = credentials => dispatch => {
+export const register = (credentials, redirect) => dispatch => {
   dispatch({ type: REGISTER_START });
     return axios.post('https://gigapets-pt-bw.herokuapp.com/api/register', credentials)
     .then(res => {
       console.log(res.data)
       localStorage.setItem("token", res.data.token);
       dispatch({ type: REGISTER_SUCCESS, payload: res.data }) //res.data will return the user and its token
+      redirect();
     })
     .catch(err => {
       dispatch({ type: REGISTER_FAILURE, payload: err});

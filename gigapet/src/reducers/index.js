@@ -11,7 +11,7 @@ import {
 } from "../actions";
 
 const initialState = {
-  user: { username: "Ronny", password: "omegalul"},
+  user: {},
   foods: ["fruit", "vegetable", "meat", "dairy"],
   isFetching: false,
   isLoggingIn: false,
@@ -29,6 +29,7 @@ export const rootReducer = (state = initialState, action) => {
     case LOGIN_SUCCESS:
       return {
         ...state,
+        user: action.payload,
         isLoggingIn: false
       };
     case LOGIN_FAILURE:

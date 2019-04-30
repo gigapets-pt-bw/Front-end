@@ -9,7 +9,7 @@ const Panel = styled.div`
   margin: 0 auto;
   display: flex;
   min-height: 370px;
-  justify-content: space-between;
+  justify-content: space-around;
   background-image: linear-gradient(#003D5C, #5CC6FC);
   border-radius: 10px;
   opacity: 0.925;
@@ -41,7 +41,7 @@ const Panel = styled.div`
   }
   .child-panel {
     width: 74%;
-    padding: 2.5% 2.5%;
+    padding: 2.5% 2.5% 2.5% 0;
     button {
       font-family: "Capriola", sans serif;
       border: 1px solid black;
@@ -65,7 +65,6 @@ const Panel = styled.div`
   img {
     width: 100px;
     height: 100px;
-  }
 `;
 
 class ParentPanel extends Component {
@@ -81,7 +80,7 @@ class ParentPanel extends Component {
             <img className="animal" src="http://clipart-library.com/new_gallery/panda-clipart-11.png" alt="generic panda logo"></img>
           </div>
           <div className="child-panel">
-            <button><i class="fas fa-plus-circle"></i>Create New Child</button>
+            <button><i className="fas fa-plus-circle"></i>Create New Child</button>
             <ChildBar name='Johnny' petname='Dino Dan' />
             <ChildBar name='Johnny2' petname='Dino Dan2' />
             <ChildBar name='Johnny3' petname='Dino Dan3' />

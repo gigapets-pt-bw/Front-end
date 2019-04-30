@@ -104,17 +104,19 @@ class Login extends React.Component {
     });
   };
 
+  redirect = event => {
+    this.props.history.push('/home');
+  }
+
   loginHandler = event => {
     event.preventDefault();
-    this.props.login(this.state.login);
-    setTimeout(this.props.history.push('/home'), 15000);
+    this.props.login(this.state.login, this.redirect)
     this.setState({ login: { username: "", password: "" } });
   };
 
   signupHandler = event => {
     event.preventDefault();
-    this.props.register(this.state.signup);
-    this.props.history.push('/home');
+    this.props.register(this.state.signup, this.redirect);
     this.setState({
       signup: { username: "", password: ""},
       newSignup: false
