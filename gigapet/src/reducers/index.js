@@ -11,8 +11,8 @@ import {
 } from "../actions";
 
 const initialState = {
-  user: { username: "Jill", password: "hentaiisart69"},
-  foods: ["fruit", "vegetable", "meat", "dairy", "candy", "greasy"],
+  user: { username: "Ronny", password: "omegalul"},
+  foods: ["fruit", "vegetable", "meat", "dairy"],
   isFetching: false,
   isLoggingIn: false,
   loginError: "",

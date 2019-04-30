@@ -3,8 +3,8 @@ import styled from "styled-components";
 import { connect } from "react-redux";
 import { login, register } from "../../actions/index.js";
 
-const PageStyle = styled.form`
-  height: 80%;
+const PageStyle = styled.div`
+  height: 85%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -42,6 +42,7 @@ const PageStyle = styled.form`
       margin-bottom: 15px;
     }
     h2 {
+      font-family: 'Londrina Shadow', cursive;
       color: #8ac926;
       width: 45%;
       font-size: 26px;
@@ -52,6 +53,7 @@ const PageStyle = styled.form`
     }
 
     button {
+      font-family: 'Capriola', sans-serif;
       background-color: #8ac926;
       color: white;
       cursor: pointer;
@@ -59,9 +61,8 @@ const PageStyle = styled.form`
       border: 1px solid lightgray;
       margin: 5% 20px;
       height: 60px;
-      width: 150px;
+      width: 140px;
       transition: 0.2s;
-
       &:hover {
         opacity: 0.85;
         box-shadow: 0px 5px 5px 0px rgba(176, 170, 176, 1);
@@ -106,12 +107,14 @@ class Login extends React.Component {
   loginHandler = event => {
     event.preventDefault();
     this.props.login(this.state.login);
+    setTimeout(this.props.history.push('/home'), 15000);
     this.setState({ login: { username: "", password: "" } });
   };
 
   signupHandler = event => {
     event.preventDefault();
     this.props.register(this.state.signup);
+    this.props.history.push('/home');
     this.setState({
       signup: { username: "", password: ""},
       newSignup: false
@@ -127,7 +130,7 @@ class Login extends React.Component {
     let loginform =
         <PageStyle>
                   <form onSubmit={this.loginHandler}>
-                    <div class="logo-wrapper">
+                    <div className="logo-wrapper">
                       <img className="logo" src={process.env.PUBLIC_URL + '/GigaPet-Logo.png'} alt="GigaPet Logo"></img>
                     </div>
                     <h2>Username</h2>
@@ -154,7 +157,7 @@ class Login extends React.Component {
     let signupform =
         <PageStyle>
             <form onSubmit={this.signupHandler}>
-                <div class="logo-wrapper">
+                <div className="logo-wrapper">
                   <img className="logo" src={process.env.PUBLIC_URL + '/GigaPet-Logo.png'} alt="GigaPet Logo"></img>
                 </div>
                 <h2>Username</h2>

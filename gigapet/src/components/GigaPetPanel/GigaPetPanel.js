@@ -1,13 +1,98 @@
 import React, {Component} from 'react';
 import FoodEntry from '../../views/FoodEntry/FoodEntry';
+import Chart from '../../views/FoodChart/FoodChart';
 import styled from 'styled-components';
-// import App from '../../views/FoodChart/FoodChart';
+
+const mockFoodEntries = 
+[ 
+  {
+    name: 'orange',
+    category: 'fruit',
+    value: 1
+  },
+  {
+    name: 'banana',
+    category: 'fruit',
+    value: 1
+  },
+  {
+    name: 'apple',
+    category: 'fruit',
+    value: 1
+  },
+  {
+    name: 'orange',
+    category: 'fruit',
+    value: 1
+  },
+  {
+    name: 'banana',
+    category: 'fruit',
+    value: 1
+  },
+  {
+    name: 'apple',
+    category: 'fruit',
+    value: 1
+  },
+  {
+    name: 'orange',
+    category: 'fruit',
+    value: 1
+  },
+  {
+    name: 'banana',
+    category: 'fruit',
+    value: 1
+  },
+  {
+    name: 'apple',
+    category: 'fruit',
+    value: 1
+  },
+  {
+    name: 'orange',
+    category: 'fruit',
+    value: 1
+  },
+  {
+    name: 'celery',
+    category: 'vegetable',
+    value: 1
+  },
+  {
+    name: 'steak',
+    category: 'meat',
+    value: 1
+  },
+  {
+    name: 'chicken',
+    category: 'meat',
+    value: 1
+  },
+  {
+    name: 'milk',
+    category: 'dairy',
+    value: 1
+  },
+  {
+    name: 'yogurt',
+    category: 'dairy',
+    value: 1
+  }
+]
 
 const GigapetContainerStyle = styled.div`
-border: 1px solid black;
-width: 50%;
-height: 500px;
+width: 70%;
+border: 2px solid black;
+height: 90%;
 margin: 0 auto;
+opacity: 0.925;
+border-radius: 5px;
+&:hover {
+    transition: 0.25s;
+    opacity: 0.975;
+}
 .panel-container {
     height: 100%;
     display: flex;
@@ -25,31 +110,42 @@ margin: 0 auto;
             width: 80%;
             margin: 0 auto;
             input {
+                font-family: 'Capriola', sans-serif;
+                height: 1.875rem;
                 margin: 5px 0;
             }
             select {
+                font-family: 'Capriola', sans-serif;
+                font-weight: bold;
                 margin: 5px 0;
+                height: 1.875rem;
             }
             .button-container {
                 display: flex;
                 flex-direction: row;
                 justify-content: space-evenly;
                 .add {
+                    font-family: 'Capriola', sans-serif;
+                    font-weight: bolder;
                     margin: 5px;
                     width: 100px;
                     height: 40px;
                     border-radius: 5px;
                     background: #8AC926;
+                    cursor: pointer;
                     &:hover {
                         background: #65931C;
                     }
                 }
                 .remove {
+                    font-family: 'Capriola', sans-serif;
+                    font-weight: bolder;
                     margin: 5px;
                     width: 100px;
                     height: 40px;
                     border-radius: 5px;
                     background: #ED7189;
+                    cursor: pointer;
                     &:hover {
                         background: #C0445B;
                     }
@@ -65,12 +161,17 @@ margin: 0 auto;
         .food-categories{
             border-top: 2px solid black;
             border-bottom: 2px solid black;
-            padding: 10px 2px 10px 4px;
             display: flex;
-            justify-content: space-between;
-            i {
+            justify-content: space-evenly;
+            img {
+                padding: 10px 2px 10px 4px;
+                opacity: 0.75;
                 cursor: pointer;
-                font-size: 32px;
+            }
+            .active {
+                transition: 0.25s;
+                opacity: 1.0;
+                transform: translateY(-5px);
             }
         }
     }
@@ -82,15 +183,26 @@ margin: 0 auto;
         justify-content: center;
         border: 1px solid black;
         border-left: 0;
+        h2 {
+            font-family: "Londrina Shadow", cursive;
+            letter-spacing: 2px;
+            color: white;
+            font-size: 28px;
+            font-weight: bolder;
+            text-shadow: 1px 1px black;
+        }
         img {
-            margin: 5% 0;
-            height: 170px;
-            width: 150px;
+            margin: 2% 0;
+            height: 130px;
+            width: 120px;
         }
         .food-eaten {
-            i {
-                font-size: 32px;
-                padding: 15px;
+            img {
+                padding: 1rem;
+                width: 32px;
+                height: 32px;
+                border-radius: 10px;
+                cursor: pointer;
             }
             width: 50%;
             display: flex;
@@ -107,10 +219,10 @@ margin: 0 auto;
 }
 `;
 
-const mockDataGigapet = {
-    name : '',
-    health : 10,
-}
+// const mockDataGigapet = {
+//     name : '',
+//     health : 10,
+// }
 
 class GigaPetPanel extends Component {
     state = {
@@ -169,7 +281,7 @@ class GigaPetPanel extends Component {
     // }
     
     render(){
-        let filteredFoods = this.props.foodentries.filter((food) => food.category===this.state.displayFood );
+        let filteredFoods = mockFoodEntries.filter((food) => food.category===this.state.displayFood );
         return (
             <GigapetContainerStyle>
                 <div className="panel-container">
@@ -194,10 +306,10 @@ class GigaPetPanel extends Component {
 
                         </form>
                         <div className="food-categories">
-                            <i onClick={() => { this.switchHandler('meat')}} className="fas fa-drumstick-bite"></i>
-                            <i onClick={() => { this.switchHandler('vegetable')}} className="fas fa-carrot"></i>
-                            <i onClick={() => { this.switchHandler('fruit')}} className="fas fa-apple-alt"></i>
-                            <i onClick={() => { this.switchHandler('dairy')}} className="fas fa-ice-cream"></i>
+                            {this.state.displayFood==="vegetable" ? <img className="active" onClick={() => { this.switchHandler('vegetable')}} src={process.env.PUBLIC_URL + '/vegetable.png'} alt="veg" /> : <img onClick={() => { this.switchHandler('vegetable')}} src={process.env.PUBLIC_URL + '/vegetable.png'} alt="veg" />}
+                            {this.state.displayFood==="meat" ? <img className="active" onClick={() => { this.switchHandler('meat')}} src={process.env.PUBLIC_URL + '/meat.png'} alt="meat" /> : <img onClick={() => { this.switchHandler('meat')}} src={process.env.PUBLIC_URL + '/meat.png'} alt="meat" />}
+                            {this.state.displayFood==="fruit" ? <img className="active" onClick={() => { this.switchHandler('fruit')}} src={process.env.PUBLIC_URL + '/fruit.png'} alt="fruit" /> : <img onClick={() => { this.switchHandler('fruit')}} src={process.env.PUBLIC_URL + '/fruit.png'} alt="fruit" />}
+                            {this.state.displayFood==="dairy" ? <img className="active" onClick={() => { this.switchHandler('dairy')}} src={process.env.PUBLIC_URL + '/dairy.png'} alt="dairy" /> : <img onClick={() => { this.switchHandler('dairy')}} src={process.env.PUBLIC_URL + '/dairy.png'} alt="dairy" />}
                         </div>
                         <div className="food-inventory">
                             {filteredFoods.map(food => <FoodEntry food={food} clickHelper={this.foodHandler} />)}
@@ -206,14 +318,15 @@ class GigaPetPanel extends Component {
 
                     <div className="gigapet-status-panel">
                         <h2>{`Kung Fu Panda, the ${this.state.hungry ? 'hungry' : 'not-so-hungry & sleepy'} Panda`}</h2>
-                        <img src={this.state.hungry ? "https://ui-ex.com/images/panda-transparent-hungry-5.png" : "https://ui-ex.com/images/panda-transparent-sleeping-1.png"} alt="Panda hungry"></img>
+                        <img src={this.state.hungry ? "https://ui-ex.com/images/panda-transparent-hungry-5.png" : "https://ui-ex.com/images/panda-transparent-sleeping-1.png"} alt="Panda"></img>
                         <div className="food-eaten">
-                            {!this.state.hasEatenMeat ? <i className="fas fa-drumstick-bite not-eaten"></i> : <i className="fas fa-drumstick-bite eaten"></i>}
-                            {!this.state.hasEatenVegetable ? <i className="fas fa-carrot not-eaten"></i> : <i className="fas fa-carrot eaten"></i> }
-                            {!this.state.hasEatenFruit ? <i className="fas fa-apple-alt not-eaten"></i> : <i className="fas fa-apple-alt eaten"></i> }
-                            {!this.state.hasEatenDairy? <i className="fas fa-ice-cream not-eaten"></i> : <i className="fas fa-ice-cream eaten"></i> }
+                            {!this.state.hasEatenVegetable ? <img src={process.env.PUBLIC_URL + '/vegetable.png'} alt="vegetable" className="not-eaten"/> : <img src={process.env.PUBLIC_URL + '/vegetable.png'} alt="vegetable" className="eaten"/>}
+                            {!this.state.hasEatenMeat ? <img src={process.env.PUBLIC_URL + '/meat.png'} alt="meat" className="not-eaten"/> : <img src={process.env.PUBLIC_URL + '/meat.png'} alt="meat" className="eaten"/>}
+                            {!this.state.hasEatenFruit ? <img src={process.env.PUBLIC_URL + '/fruit.png'} alt="fruit" className="not-eaten"/> : <img src={process.env.PUBLIC_URL + '/fruit.png'} alt="fruit" className="eaten"/>}
+                            {!this.state.hasEatenDairy ? <img src={process.env.PUBLIC_URL + '/dairy.png'} alt="dairy" className="not-eaten"/> : <img src={process.env.PUBLIC_URL + '/dairy.png'} alt="dairy" className="eaten"/>}
                         </div>
-                        {/* <App /> */}
+                        <Chart
+                        />
                     </div>
                 </div>
            </GigapetContainerStyle>

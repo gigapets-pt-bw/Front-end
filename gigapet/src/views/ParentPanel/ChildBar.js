@@ -28,6 +28,7 @@ const ChildBarStyle = styled.div`
         }
     }
     .status {
+        font-family: "Capriola", sans serif;
         font-weight: bolder;
     }
     &:hover {

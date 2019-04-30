@@ -12,10 +12,10 @@ const Panel = styled.div`
   justify-content: space-between;
   background-image: linear-gradient(#003D5C, #5CC6FC);
   border-radius: 10px;
-  opacity: 0.875;
+  opacity: 0.925;
   padding-top: 20px;
   &:hover {
-    opacity: 0.96;
+    opacity: 0.975;
     transition: 0.25s;
   }
   .user-panel {
@@ -25,26 +25,33 @@ const Panel = styled.div`
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
-    width: 19%;
+    width: 24%;
     .person {
       width: 50px;
       height: 50px;
     }
     h2 {
+      font-family: "Londrina Shadow", cursive;
+      font-weight: bolder;
+      font-size: 32px;
+      color: white;
+      text-shadow: 1px 1px black;
       width: 100%;
     }
   }
   .child-panel {
-    width: 79%;
+    width: 74%;
     padding: 2.5% 2.5%;
     button {
+      font-family: "Capriola", sans serif;
       border: 1px solid black;
       width: 100%;
       height: 60px;
       margin: 10px 0;
       font-weight: bolder;
       border-radius: 5px;
-      font-size: 18px;
+      font-size: 22px;
+      letter-spacing: 2px;
       i {
         color: #EA526F;
         margin-right: 10px;
