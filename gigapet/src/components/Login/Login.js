@@ -1,16 +1,16 @@
 import React from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
-import { login, register } from "../../actions/index.js";
+import { login, register, fetchChildren } from "../../actions/index.js";
 
 const PageStyle = styled.div`
   height: 85%;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-end;
   form {
     opacity: 0.96;
-    height: 100%;
+    height: 90vh;
     width: 40%;
     box-shadow: 5px 5px 4px 4px #696F71;
     border-radius: 12.5px;
@@ -18,7 +18,7 @@ const PageStyle = styled.div`
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    align-content: flex-start;
+    align-content: space-around;
     .logo-wrapper {
       display: flex;
       justify-content: center;
@@ -45,7 +45,7 @@ const PageStyle = styled.div`
       font-family: 'Londrina Shadow', cursive;
       color: #8ac926;
       width: 45%;
-      font-size: 26px;
+      font-size: 40px;
       font-weight: bolder;
       align-self: center;
       margin-top: 5px;
@@ -59,7 +59,7 @@ const PageStyle = styled.div`
       cursor: pointer;
       border-radius: 3px;
       border: 1px solid lightgray;
-      margin: 5% 20px;
+      margin: 10% 20px;
       height: 60px;
       width: 140px;
       transition: 0.2s;
@@ -108,20 +108,29 @@ class Login extends React.Component {
     this.props.history.push('/home');
   }
 
+  fetch = event => {
+    this.props.fetchChildren(this.props.user.id, this.props.user.token);
+  }
+
   loginHandler = event => {
     event.preventDefault();
-    this.props.login(this.state.login, this.redirect)
+    this.props.login(this.state.login, this.redirect, this.fetch);
     this.setState({ login: { username: "", password: "" } });
   };
 
   signupHandler = event => {
     event.preventDefault();
-    this.props.register(this.state.signup, this.redirect);
+    this.props.register(this.state.signup, this.redirect, this.fetch);
     this.setState({
       signup: { username: "", password: ""},
       newSignup: false
     });
   };
+
+  backButton = event => {
+    event.preventDefault();
+    this.setState({newSignup: false});
+  }
 
   signupButton = event => {
     event.preventDefault();
@@ -131,29 +140,29 @@ class Login extends React.Component {
   render() {
     let loginform =
         <PageStyle>
-                  <form onSubmit={this.loginHandler}>
-                    <div className="logo-wrapper">
-                      <img className="logo" src={process.env.PUBLIC_URL + '/GigaPet-Logo.png'} alt="GigaPet Logo"></img>
-                    </div>
-                    <h2>Username</h2>
-                    <input
-                      type="text"
-                      name="username"
-                      placeholder="Username"
-                      onChange={this.inputHandlerLogin}
-                      value={this.state.login.username}
-                    />
-                    <h2>Password</h2>
-                    <input
-                      type="password"
-                      name="password"
-                      placeholder="Password"
-                      onChange={this.inputHandlerLogin}
-                      value={this.state.login.password}
-                    />
-                    <button>Log In</button>
-                    <button onClick={this.signupButton}>Sign Up</button>
-                  </form>
+          <form onSubmit={this.loginHandler}>
+            <div className="logo-wrapper">  
+              <img className="logo" src={process.env.PUBLIC_URL + '/GigaPet-Logo.png'} alt="GigaPet Logo"></img>
+            </div>
+            <h2>Username</h2>
+            <input
+              type="text"
+              name="username"
+              placeholder="Username"
+              onChange={this.inputHandlerLogin}
+              value={this.state.login.username}
+            />
+            <h2>Password</h2>
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              onChange={this.inputHandlerLogin}
+              value={this.state.login.password}
+            />
+            <button>Log In</button>
+            <button onClick={this.signupButton}>Sign Up</button>
+          </form>
         </PageStyle>
     
     let signupform =
@@ -178,6 +187,7 @@ class Login extends React.Component {
                   onChange={this.inputHandlerSignup}
                   value={this.state.signup.password}
                 />
+                <button onClick={this.backButton}>Back</button>
                 <button>Create Account</button>
               </form>
         </PageStyle>
@@ -192,11 +202,11 @@ class Login extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.user
+    user: state.user,
   };
 };
 
 export default connect(
   mapStateToProps,
-  { login, register }
+  { login, register, fetchChildren }
 )(Login);

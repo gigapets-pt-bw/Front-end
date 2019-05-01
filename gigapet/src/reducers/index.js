@@ -8,13 +8,18 @@ import {
   REGISTER_START,
   REGISTER_SUCCESS,
   REGISTER_FAILURE,
+  CREATECHILD_START,
+  CREATECHILD_SUCCESS,
+  CREATECHILD_FAILURE
 } from "../actions";
 
 const initialState = {
   user: {},
+  children: [],
   foods: ["fruit", "vegetable", "meat", "dairy"],
   isFetching: false,
   isLoggingIn: false,
+  creatingChild: false,
   loginError: "",
   error: ""
 };
@@ -42,19 +47,19 @@ export const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         isLoggingIn: true
-      }
+      };
     case REGISTER_SUCCESS:
       return {
         ...state,
         isLoggingIn: false,
         user: action.payload
-      }
+      };
     case REGISTER_FAILURE:
       return {
         ...state,
         isLoggingIn: false,
         error: action.payload
-      }
+      };
     case FETCH_DATA_START:
       return {
         ...state,
@@ -63,13 +68,31 @@ export const rootReducer = (state = initialState, action) => {
     case FETCH_DATA_SUCCESS:
       return {
         ...state,
-        isFetching: false
-        //Something something users: action.payload
+        isFetching: false,
+        children: action.payload
       };
     case FETCH_DATA_FAILURE:
       return {
         ...state,
         isFetching: false,
+        error: "Failed to fetch..."
+      };
+    case CREATECHILD_START:
+      return {
+        ...state,
+        creatingChild: true
+      };
+    case CREATECHILD_SUCCESS:
+      console.log(action.payload);
+      return {
+        ...state,
+        creatingChild: false,
+        children: action.payload
+      };
+    case CREATECHILD_FAILURE:
+      return {
+        ...state,
+        creatingChild: false,
         error: "Failed to fetch..."
       };
     default:
@@ -78,22 +101,3 @@ export const rootReducer = (state = initialState, action) => {
 };
 
 export default rootReducer;
-
-// Example user data structure
-// {
-//   username: "Ronny",
-//   password: "password1234",
-//   children: [
-//     {
-//       name:"Ludwick",
-//       gigapet: {},
-//       savedFoods: [
-//         {
-//           name: "tomato",
-//           date: "4/23/19",
-//           category: "vegetable"
-//         }
-//       ]
-//     }
-//   ]
-// }
