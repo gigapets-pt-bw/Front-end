@@ -2,6 +2,10 @@
 import axios from "axios";
 import axiosWithAuth from "../axiosAuth";
 
+export const ADD_ENTRY = "ADD_ENTRY";
+
+export const FETCH_ENTRIES = "FETCH_ENTRIES";
+
 export const LOGIN_START = "LOGIN_START";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_FAILURE = "LOGIN_FAILURE";
@@ -17,6 +21,8 @@ export const REGISTER_FAILURE = "REGISTER_FAILURE";
 export const CREATECHILD_START = "CREATECHILD_START";
 export const CREATECHILD_SUCCESS = "CREATECHILD_SUCCESS";
 export const CREATECHILD_FAILURE = "CREATECHILD_FAILURE";
+
+export const FETCH_CURRENT_CHILD = "FETCH_CURRENT_CHILD";
 
 export const login = (credentials, redirect, fetch) => dispatch => {
   dispatch({ type: LOGIN_START });
@@ -67,16 +73,40 @@ export const fetchChildren = id => dispatch => {
   })
 };
 
-export const createChild = (child, id) => dispatch => {
+export const createChild = (child, fetch) => dispatch => {
   dispatch({ type: CREATECHILD_START });
-    return axiosWithAuth().post(`https://gigapets-pt-bw.herokuapp.com/api/parents/${id}/children`, child)
+    return axiosWithAuth().post(`https://gigapets-pt-bw.herokuapp.com/api/parents/${child.parentId}/children`, child)
     .then(res => {
       dispatch({
         type: CREATECHILD_SUCCESS,
         payload: res.data
       })
+      fetch();
+    })
     .catch(error => {
       dispatch({type: CREATECHILD_FAILURE, payload: error})
     })
+}
+
+export const addFoodEntry = newEntry => dispatch => {
+  return axiosWithAuth().post(`https://gigapets-pt-bw.herokuapp.com/api/foodentries`, newEntry).then(res => {
+    dispatch({ type: ADD_ENTRY, payload: newEntry, test: res.data });
   })
+  .catch(error => {
+    console.log(error);
+  })
+}
+
+export const fetchFoodEntries = id => dispatch => {
+  return axiosWithAuth().get(`https://gigapets-pt-bw.herokuapp.com/api/children/${id}/entries`).then(res => {
+    dispatch({ type: FETCH_ENTRIES, id: id, array: res.data})
+  })
+  .catch(error => {
+    console.log(error);
+  })
+}
+
+export const currentChild = (fetch, currentChild) => dispatch => {
+  dispatch({ type: FETCH_CURRENT_CHILD, payload: currentChild[0] });
+  fetch(currentChild[0]);
 }

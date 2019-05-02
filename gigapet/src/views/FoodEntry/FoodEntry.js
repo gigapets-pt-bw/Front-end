@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
 
 const FoodCardStyle = styled.button`
 background: #D0EEFE;
@@ -20,10 +21,16 @@ font-weight: bold;
 
 function FoodEntry (props) {
     return (
-        <FoodCardStyle onClick={() => { props.clickHelper(props.food.category)}}>
+        <FoodCardStyle onClick={() => { props.clickHelper(props.food, props.childId)}}>
                 {props.food.name}
         </FoodCardStyle>
     )
 }
 
-export default FoodEntry;
+const mapStateToProps = state => {
+    return {
+        childId : state.currentChild.id
+    };
+}
+
+export default connect(mapStateToProps, { })(FoodEntry);

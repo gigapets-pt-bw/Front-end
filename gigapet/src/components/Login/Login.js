@@ -109,7 +109,7 @@ class Login extends React.Component {
   }
 
   fetch = event => {
-    this.props.fetchChildren(this.props.user.id, this.props.user.token);
+    this.props.fetchChildren(this.props.user.id);
   }
 
   loginHandler = event => {
@@ -160,7 +160,7 @@ class Login extends React.Component {
               onChange={this.inputHandlerLogin}
               value={this.state.login.password}
             />
-            <button>Log In</button>
+            <button type="submit">Log In</button>
             <button onClick={this.signupButton}>Sign Up</button>
           </form>
         </PageStyle>
@@ -187,8 +187,8 @@ class Login extends React.Component {
                   onChange={this.inputHandlerSignup}
                   value={this.state.signup.password}
                 />
+                <button type="submit">Create Account</button>
                 <button onClick={this.backButton}>Back</button>
-                <button>Create Account</button>
               </form>
         </PageStyle>
         

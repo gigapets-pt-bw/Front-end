@@ -10,16 +10,22 @@ import {
   REGISTER_FAILURE,
   CREATECHILD_START,
   CREATECHILD_SUCCESS,
-  CREATECHILD_FAILURE
+  CREATECHILD_FAILURE,
+  FETCH_CURRENT_CHILD,
+  ADD_ENTRY,
+  FETCH_ENTRIES
 } from "../actions";
 
 const initialState = {
   user: {},
   children: [],
+  currentChild: {},
+  foodEntries : [],
   foods: ["fruit", "vegetable", "meat", "dairy"],
   isFetching: false,
   isLoggingIn: false,
   creatingChild: false,
+  test: {},
   loginError: "",
   error: ""
 };
@@ -83,11 +89,10 @@ export const rootReducer = (state = initialState, action) => {
         creatingChild: true
       };
     case CREATECHILD_SUCCESS:
-      console.log(action.payload);
       return {
         ...state,
         creatingChild: false,
-        children: action.payload
+        children: [...state.children, action.payload]
       };
     case CREATECHILD_FAILURE:
       return {
@@ -95,6 +100,23 @@ export const rootReducer = (state = initialState, action) => {
         creatingChild: false,
         error: "Failed to fetch..."
       };
+    case FETCH_CURRENT_CHILD:
+      return {
+        ...state,
+        currentChild: action.payload
+      }
+    case FETCH_ENTRIES:
+      let entries = action.array.filter(entry => entry.childId === action.id)
+      return {
+        ...state,
+        foodEntries: entries
+      }
+    case ADD_ENTRY:
+      return {
+        ...state,
+        test: action.test,
+        foodEntries: [...state.foodEntries, action.payload]
+      }
     default:
       return state;
   }

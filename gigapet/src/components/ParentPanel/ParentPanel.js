@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import ChildBar from '../../views/ParentPanel/ChildBar';
 import { connect } from "react-redux";
-import { createChild } from "../../actions";
+import { createChild, fetchChildren } from "../../actions";
 
 const Panel = styled.div`
   border: 1px solid black;
@@ -20,7 +20,7 @@ const Panel = styled.div`
     transition: 0.25s;
   }
   .user-panel {
-    padding: 2% 1%;
+    padding: 3% 1% 3% 0;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
@@ -68,7 +68,7 @@ const Panel = styled.div`
     height: 100px;
 `;
 
-const ChildForm = styled.form`
+const ChildForm = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -135,13 +135,22 @@ class ParentPanel extends Component {
     this.setState({[event.target.name]: event.target.value});
   }
 
+  fetch = event => {
+    this.props.fetchChildren(this.props.user.id);
+  }
+
+  gigaLink = event => {
+    this.props.history.push('/home/giga');
+  }
+
   createChild = event => {
     event.preventDefault();
     let newChild = {
       name : this.state.name,
-      gigapetName : this.state.gigapet
+      gigapetName : this.state.gigapet,
+      parentId : this.props.user.id
     }
-    this.props.createChild(newChild, this.props.user.id);
+    this.props.createChild(newChild, this.fetch);
     this.setState({
       name: "", 
       gigapet: "",
@@ -165,11 +174,11 @@ class ParentPanel extends Component {
       <ChildForm>
         <form onSubmit={this.createChild}>
             <div className="column">
-              <h2>Name:</h2>
+              <h2>Child Name:</h2>
               <input
                 type="text"
                 name="name"
-                placeholder="Name"
+                placeholder="Child Name"
                 onChange={this.inputHandler}
                 value={this.state.name}
               />
@@ -202,13 +211,9 @@ class ParentPanel extends Component {
           </div>
           <div className="child-panel">
             {this.state.newChild ? newChildForm : newChildButton}
-            {/*this.props.children.map(child => { 
-              <ChildBar name={child.name} gigapetName={child.gigapetName} />
-              }*/}
-            <ChildBar name='Johnny' gigapetName='Dino Dan' />
-            <ChildBar name='Johnny2' gigapetName='Dino Dan2' />
-            <ChildBar name='Johnny3' gigapetName='Dino Dan3' />
-            <ChildBar name='Johnny4' gigapetName='Dino Dan4' />
+            {this.props.children.map(child => 
+              <ChildBar redirect={this.gigaLink} name={child.name} gigapetName={child.gigapetName}/>
+            )}
           </div>
         </Panel>
     );
@@ -224,6 +229,6 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { createChild }
+  { createChild, fetchChildren }
 )(ParentPanel);
 

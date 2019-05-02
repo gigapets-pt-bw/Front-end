@@ -2,85 +2,9 @@ import React, {Component} from 'react';
 import FoodEntry from '../../views/FoodEntry/FoodEntry';
 import Chart from '../../views/FoodChart/FoodChart';
 import styled from 'styled-components';
-
-const mockFoodEntries = 
-[ 
-  {
-    name: 'orange',
-    category: 'fruit',
-    value: 1
-  },
-  {
-    name: 'banana',
-    category: 'fruit',
-    value: 1
-  },
-  {
-    name: 'apple',
-    category: 'fruit',
-    value: 1
-  },
-  {
-    name: 'orange',
-    category: 'fruit',
-    value: 1
-  },
-  {
-    name: 'banana',
-    category: 'fruit',
-    value: 1
-  },
-  {
-    name: 'apple',
-    category: 'fruit',
-    value: 1
-  },
-  {
-    name: 'orange',
-    category: 'fruit',
-    value: 1
-  },
-  {
-    name: 'banana',
-    category: 'fruit',
-    value: 1
-  },
-  {
-    name: 'apple',
-    category: 'fruit',
-    value: 1
-  },
-  {
-    name: 'orange',
-    category: 'fruit',
-    value: 1
-  },
-  {
-    name: 'celery',
-    category: 'vegetable',
-    value: 1
-  },
-  {
-    name: 'steak',
-    category: 'meat',
-    value: 1
-  },
-  {
-    name: 'chicken',
-    category: 'meat',
-    value: 1
-  },
-  {
-    name: 'milk',
-    category: 'dairy',
-    value: 1
-  },
-  {
-    name: 'yogurt',
-    category: 'dairy',
-    value: 1
-  }
-]
+import axiosWithAuth from "../../axiosAuth";
+import {addFoodEntry} from "../../actions";
+import { connect } from 'react-redux';
 
 const GigapetContainerStyle = styled.div`
 width: 70%;
@@ -159,7 +83,6 @@ border-radius: 5px;
             padding-top: 0.5rem;
         }
         .food-categories{
-            border-top: 2px solid black;
             border-bottom: 2px solid black;
             display: flex;
             justify-content: space-evenly;
@@ -220,47 +143,57 @@ border-radius: 5px;
 }
 `;
 
-// const mockDataGigapet = {
-//     name : '',
-//     health : 10,
-// }
-
 class GigaPetPanel extends Component {
     state = {
-        newFood : "",
+        foods : [],
         displayFood : "",
         hasEatenMeat : false,
         hasEatenFruit : false,
         hasEatenDairy : false,
         hasEatenVegetable : false,
         hungry : true,
+        foodEntries: [],
+    }
+
+    componentDidMount = event => {
+        axiosWithAuth().get('https://gigapets-pt-bw.herokuapp.com/api/foods').then(res => 
+            this.setState({foods: res.data})
+        )
+        .catch(error => console.log(error));
+        console.log(this.calculateData());
     }
 
     switchHandler(food) {
         this.setState({ displayFood: food })
     }
     
-    foodHandler = food => {
-        switch(food) {
-            case('fruit'):
+    foodHandler = (food, id) => {
+        let newEntry = {
+            childId : id,
+            foodId : food.id,
+            date : Date.now()
+        }
+        this.props.addFoodEntry(newEntry);
+        switch(food.categoryId) {
+            case(1):
                 if (this.state.hasEatenMeat && this.state.hasEatenDairy && this.state.hasEatenVegetable) {
                     this.setState({ displayFood: food, hungry : false })
                 }
                 this.setState({ hasEatenFruit : true });
                 break;
-            case('meat'):
+            case(4):
                 if (this.state.hasEatenDairy && this.state.hasEatenVegetable && this.state.hasEatenFruit) {
                     this.setState({ displayFood: food, hungry : false })
                 }
                 this.setState({ hasEatenMeat : true });
                 break;
-            case('vegetable'):
+            case(2):
                 if (this.state.hasEatenDairy && this.state.hasEatenMeat && this.state.hasEatenFruit) {
                     this.setState({ displayFood: food, hungry : false })
                 }
                 this.setState({ hasEatenVegetable : true });
                 break;
-            case('dairy'):
+            case(5):
                 if (this.state.hasEatenMeat && this.state.hasEatenVegetable && this.state.hasEatenFruit) {
                     this.setState({ displayFood: food, hungry : false })
                 }
@@ -277,12 +210,31 @@ class GigaPetPanel extends Component {
         });
       };
 
+    calculateData = event => {
+        if (this.props.foodEntries.length){
+            let entriesLength = this.props.foodEntries.length
+            let meats = this.props.foodEntries.filter(food => food.categoryId===4)
+            let veg = this.props.foodEntries.filter(food => food.categoryId===2)
+            let fruit = this.props.foodEntries.filter(food => food.categoryId===1)
+            let dairy = this.props.foodEntries.filter(food => food.categoryId===5)
+            console.log(this.props.foodEntries.length);
+            return [
+                meats.length/entriesLength*100,
+                veg.length/entriesLength*100,
+                fruit.length/entriesLength*100,
+                dairy.length/entriesLength*100
+            ]
+        } else {
+            return [25, 25, 25, 25]
+        }
+    }
+
     // newFoodHandler = () => {
     //     this.setState ({ newFood: '' })
     // }
     
     render(){
-        let filteredFoods = mockFoodEntries.filter((food) => food.category===this.state.displayFood );
+        let filteredFoods = this.state.foods.filter(food => food.categoryId === this.state.displayFood);
         return (
             <GigapetContainerStyle>
                 <div className="panel-container">
@@ -307,10 +259,10 @@ class GigaPetPanel extends Component {
 
                         </form> */}
                         <div className="food-categories">
-                            {this.state.displayFood==="vegetable" ? <img className="active" onClick={() => { this.switchHandler('vegetable')}} src={process.env.PUBLIC_URL + '/vegetable.png'} alt="veg" /> : <img onClick={() => { this.switchHandler('vegetable')}} src={process.env.PUBLIC_URL + '/vegetable.png'} alt="veg" />}
-                            {this.state.displayFood==="meat" ? <img className="active" onClick={() => { this.switchHandler('meat')}} src={process.env.PUBLIC_URL + '/meat.png'} alt="meat" /> : <img onClick={() => { this.switchHandler('meat')}} src={process.env.PUBLIC_URL + '/meat.png'} alt="meat" />}
-                            {this.state.displayFood==="fruit" ? <img className="active" onClick={() => { this.switchHandler('fruit')}} src={process.env.PUBLIC_URL + '/fruit.png'} alt="fruit" /> : <img onClick={() => { this.switchHandler('fruit')}} src={process.env.PUBLIC_URL + '/fruit.png'} alt="fruit" />}
-                            {this.state.displayFood==="dairy" ? <img className="active" onClick={() => { this.switchHandler('dairy')}} src={process.env.PUBLIC_URL + '/dairy.png'} alt="dairy" /> : <img onClick={() => { this.switchHandler('dairy')}} src={process.env.PUBLIC_URL + '/dairy.png'} alt="dairy" />}
+                            {this.state.displayFood===2 ? <img className="active" onClick={() => { this.switchHandler(2)}} src={process.env.PUBLIC_URL + '/vegetable.png'} alt="veg" /> : <img onClick={() => { this.switchHandler(2)}} src={process.env.PUBLIC_URL + '/vegetable.png'} alt="veg" />}
+                            {this.state.displayFood===4 ? <img className="active" onClick={() => { this.switchHandler(4)}} src={process.env.PUBLIC_URL + '/meat.png'} alt="meat" /> : <img onClick={() => { this.switchHandler(4)}} src={process.env.PUBLIC_URL + '/meat.png'} alt="meat" />}
+                            {this.state.displayFood===1 ? <img className="active" onClick={() => { this.switchHandler(1)}} src={process.env.PUBLIC_URL + '/fruit.png'} alt="fruit" /> : <img onClick={() => { this.switchHandler(1)}} src={process.env.PUBLIC_URL + '/fruit.png'} alt="fruit" />}
+                            {this.state.displayFood===5 ? <img className="active" onClick={() => { this.switchHandler(5)}} src={process.env.PUBLIC_URL + '/dairy.png'} alt="dairy" /> : <img onClick={() => { this.switchHandler(5)}} src={process.env.PUBLIC_URL + '/dairy.png'} alt="dairy" />}
                         </div>
                         <div className="food-inventory">
                             {filteredFoods.map(food => <FoodEntry food={food} clickHelper={this.foodHandler} />)}
@@ -318,7 +270,7 @@ class GigaPetPanel extends Component {
                     </div>
 
                     <div className="gigapet-status-panel">
-                        <h2>{`Kung Fu Panda, the ${this.state.hungry ? 'hungry' : 'not-so-hungry & sleepy'} Panda`}</h2>
+                        <h2>{`${this.props.currentChild.gigapetName}, the ${this.state.hungry ? 'hungry' : 'not-so-hungry & sleepy'} gigapet`}</h2>
                         <img src={this.state.hungry ? "https://ui-ex.com/images/panda-transparent-hungry-5.png" : "https://ui-ex.com/images/panda-transparent-sleeping-1.png"} alt="Panda"></img>
                         <div className="food-eaten">
                             {!this.state.hasEatenVegetable ? <img src={process.env.PUBLIC_URL + '/vegetable.png'} alt="vegetable" className="not-eaten"/> : <img src={process.env.PUBLIC_URL + '/vegetable.png'} alt="vegetable" className="eaten"/>}
@@ -327,7 +279,7 @@ class GigaPetPanel extends Component {
                             {!this.state.hasEatenDairy ? <img src={process.env.PUBLIC_URL + '/dairy.png'} alt="dairy" className="not-eaten"/> : <img src={process.env.PUBLIC_URL + '/dairy.png'} alt="dairy" className="eaten"/>}
                         </div>
                         <Chart
-                        />
+                        entries={this.calculateData}/>
                     </div>
                 </div>
            </GigapetContainerStyle>
@@ -335,4 +287,10 @@ class GigaPetPanel extends Component {
     }
 }
 
-export default GigaPetPanel;
+const mapStateToProps = state => {
+    return {
+        currentChild: state.currentChild,
+        foodEntries: state.foodEntries
+    }
+}
+export default connect(mapStateToProps, { addFoodEntry })(GigaPetPanel);
