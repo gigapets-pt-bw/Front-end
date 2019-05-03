@@ -160,47 +160,51 @@ class GigaPetPanel extends Component {
             this.setState({foods: res.data})
         )
         .catch(error => console.log(error));
-        console.log(this.calculateData());
+        // console.log(this.calculateData());
     }
 
     switchHandler(food) {
         this.setState({ displayFood: food })
     }
     
+    
+    
     foodHandler = (food, id) => {
         let newEntry = {
             childId : id,
             foodId : food.id,
-            date : Date.now()
+            date : new Date().toISOString()
         }
-        this.props.addFoodEntry(newEntry);
+        console.log(newEntry);
+        this.setState({foodEntries:[...this.props.foodEntries, newEntry]});
+        this.props.addFoodEntry(newEntry, id);
         switch(food.categoryId) {
             case(1):
                 if (this.state.hasEatenMeat && this.state.hasEatenDairy && this.state.hasEatenVegetable) {
-                    this.setState({ displayFood: food, hungry : false })
+                    this.setState({ displayFood: food.categoryId, hungry : false })
                 }
                 this.setState({ hasEatenFruit : true });
                 break;
             case(4):
                 if (this.state.hasEatenDairy && this.state.hasEatenVegetable && this.state.hasEatenFruit) {
-                    this.setState({ displayFood: food, hungry : false })
+                    this.setState({ displayFood: food.categoryId, hungry : false })
                 }
                 this.setState({ hasEatenMeat : true });
                 break;
             case(2):
                 if (this.state.hasEatenDairy && this.state.hasEatenMeat && this.state.hasEatenFruit) {
-                    this.setState({ displayFood: food, hungry : false })
+                    this.setState({ displayFood: food.categoryId, hungry : false })
                 }
                 this.setState({ hasEatenVegetable : true });
                 break;
             case(5):
                 if (this.state.hasEatenMeat && this.state.hasEatenVegetable && this.state.hasEatenFruit) {
-                    this.setState({ displayFood: food, hungry : false })
+                    this.setState({ displayFood: food.categoryId, hungry : false })
                 }
                 this.setState({ hasEatenDairy : true });
                 break;
             default:
-                return null
+                this.setState({ displayFood: food.categoryId })
         }
     }
 
@@ -209,25 +213,6 @@ class GigaPetPanel extends Component {
             [event.target.name]: event.target.value
         });
       };
-
-    calculateData = event => {
-        if (this.props.foodEntries.length){
-            let entriesLength = this.props.foodEntries.length
-            let meats = this.props.foodEntries.filter(food => food.categoryId===4)
-            let veg = this.props.foodEntries.filter(food => food.categoryId===2)
-            let fruit = this.props.foodEntries.filter(food => food.categoryId===1)
-            let dairy = this.props.foodEntries.filter(food => food.categoryId===5)
-            console.log(this.props.foodEntries.length);
-            return [
-                meats.length/entriesLength*100,
-                veg.length/entriesLength*100,
-                fruit.length/entriesLength*100,
-                dairy.length/entriesLength*100
-            ]
-        } else {
-            return [25, 25, 25, 25]
-        }
-    }
 
     // newFoodHandler = () => {
     //     this.setState ({ newFood: '' })
@@ -279,7 +264,7 @@ class GigaPetPanel extends Component {
                             {!this.state.hasEatenDairy ? <img src={process.env.PUBLIC_URL + '/dairy.png'} alt="dairy" className="not-eaten"/> : <img src={process.env.PUBLIC_URL + '/dairy.png'} alt="dairy" className="eaten"/>}
                         </div>
                         <Chart
-                        entries={this.calculateData}/>
+                        />
                     </div>
                 </div>
            </GigapetContainerStyle>

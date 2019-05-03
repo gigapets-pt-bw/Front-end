@@ -25,7 +25,6 @@ const initialState = {
   isFetching: false,
   isLoggingIn: false,
   creatingChild: false,
-  test: {},
   loginError: "",
   error: ""
 };
@@ -114,8 +113,7 @@ export const rootReducer = (state = initialState, action) => {
     case ADD_ENTRY:
       return {
         ...state,
-        test: action.test,
-        foodEntries: [...state.foodEntries, action.payload]
+        foodEntries: action.payload
       }
     default:
       return state;

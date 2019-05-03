@@ -88,18 +88,22 @@ export const createChild = (child, fetch) => dispatch => {
     })
 }
 
-export const addFoodEntry = newEntry => dispatch => {
+export const addFoodEntry = (newEntry, id) => dispatch => {
+  console.log(newEntry);
   return axiosWithAuth().post(`https://gigapets-pt-bw.herokuapp.com/api/foodentries`, newEntry).then(res => {
-    dispatch({ type: ADD_ENTRY, payload: newEntry, test: res.data });
+    axiosWithAuth().get(`https://gigapets-pt-bw.herokuapp.com/api/children/${id}/entries`).then(res => {
+      dispatch({ type: ADD_ENTRY, payload: res.data });
+    })
   })
   .catch(error => {
     console.log(error);
   })
 }
 
-export const fetchFoodEntries = id => dispatch => {
+export const fetchFoodEntries = (id, redirect) => dispatch => {
   return axiosWithAuth().get(`https://gigapets-pt-bw.herokuapp.com/api/children/${id}/entries`).then(res => {
     dispatch({ type: FETCH_ENTRIES, id: id, array: res.data})
+    redirect();
   })
   .catch(error => {
     console.log(error);
@@ -107,6 +111,6 @@ export const fetchFoodEntries = id => dispatch => {
 }
 
 export const currentChild = (fetch, currentChild) => dispatch => {
-  dispatch({ type: FETCH_CURRENT_CHILD, payload: currentChild[0] });
   fetch(currentChild[0]);
+  dispatch({ type: FETCH_CURRENT_CHILD, payload: currentChild[0] });
 }

@@ -53,7 +53,7 @@ const ChildBarStyle = styled.div`
 
 const ChildBar = props => {
     function fetchEntries(currentChild) {
-        props.fetchFoodEntries(currentChild.id);
+        props.fetchFoodEntries(currentChild.id, props.redirect);
     }
     return (
         <>
@@ -61,7 +61,6 @@ const ChildBar = props => {
                 <p className="status">{`${props.name}'s  Gigapet - ${props.gigapetName}`}</p>
                 <div onClick={() => { 
                     props.currentChild(fetchEntries, props.children.filter(child => child.name === props.name), //need to pass props.id
-                    props.redirect()
                     )}} className="view-child">
                     <i className="fas fa-eye"></i>
                     <p>View</p>
