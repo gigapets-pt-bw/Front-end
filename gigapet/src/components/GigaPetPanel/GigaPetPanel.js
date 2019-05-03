@@ -175,7 +175,6 @@ class GigaPetPanel extends Component {
             foodId : food.id,
             date : new Date().toISOString()
         }
-        console.log(newEntry);
         this.setState({foodEntries:[...this.props.foodEntries, newEntry]});
         this.props.addFoodEntry(newEntry, id);
         switch(food.categoryId) {
