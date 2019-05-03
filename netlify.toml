@@ -1,0 +1,4 @@
+[build]
+base = "gigapet-bw/"
+publish = "gigapet-bw/build/"
+command = "yarn run build"
