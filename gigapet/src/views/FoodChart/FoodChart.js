@@ -30,7 +30,7 @@ class Chart extends Component {
     
     filterDate = event => {
         const today = new Date().toISOString().split('')
-        switch(this.state.dayWeekMont) {
+        switch(this.state.dayWeekMonth) {
             case("day"):
                 return this.props.foodEntries.filter(entry =>
                     entry.entryDate.split('')[5]+
@@ -43,7 +43,7 @@ class Chart extends Component {
                 return this.props.foodEntries.filter(entry => {
                     let rangeEnd = parseInt(today[8]+today[9], 10)
                     let entryDate = parseInt(entry.entryDate.split('')[8]+entry.entryDate.split('')[9], 10)
-                    let month = parseInt(entry.entryDate.split('')[5]+entry.entryDate.split('')[6],10)
+                    let month = parseInt(entry.entryDate.split('')[5]+entry.entryDate.split('')[6], 10)
                     console.log(rangeEnd, entryDate);
                     for(let i=1; i<=7; i++, rangeEnd--) {
                         console.log(rangeEnd);
