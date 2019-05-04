@@ -10,11 +10,11 @@ import GigaPetPanel from "./components/GigaPetPanel/GigaPetPanel";
 class App extends Component {
   render(){
     return (
-      <div className="App">
-        <Route exact path="/" component={Login} />
-        <PrivateRoute path="/home/giga" component={GigaPetPanel} />
-        <PrivateRoute exact path="/home" component={ParentPanel} />
-      </div>
+        <div className="App">
+          <Route exact path="/" component={Login} />
+          <PrivateRoute path="/home/giga" component={GigaPetPanel} />
+          <PrivateRoute exact path="/home" component={ParentPanel} />
+        </div>
     );
   }
 }

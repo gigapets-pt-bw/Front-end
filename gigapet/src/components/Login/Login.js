@@ -8,6 +8,10 @@ const PageStyle = styled.div`
   display: flex;
   justify-content: center;
   align-items: flex-end;
+  @media screen and (max-width: 900px) {
+    height: 80%;
+    align-items: center;
+  }
   form {
     opacity: 0.96;
     height: 90vh;
@@ -19,6 +23,11 @@ const PageStyle = styled.div`
     flex-wrap: wrap;
     justify-content: center;
     align-content: space-around;
+    @media screen and (max-width: 900px) {
+      width: 90%;
+      opacity: 0.99;
+      height: 95vh;
+    }
     .logo-wrapper {
       display: flex;
       justify-content: center;
@@ -28,6 +37,12 @@ const PageStyle = styled.div`
         width: 200px;
         margin-top: 15px;
         margin-bottom: 40px;
+        @media screen and (max-width: 900px) {
+          width: 140px;
+          height: 140px
+          margin-top: 7px;
+          margin-bottom: 0;
+        }
       }
     }
     input {
@@ -40,6 +55,12 @@ const PageStyle = styled.div`
       font-size: 18px;
       font-weight: bolder;
       margin-bottom: 15px;
+      @media screen and (max-width: 900px) {
+        font-size: 16px;
+        width: 70%;
+        height: 7%;
+        margin-bottom: 5px;
+      }
     }
     h2 {
       font-family: 'Londrina Shadow', cursive;
@@ -50,6 +71,12 @@ const PageStyle = styled.div`
       align-self: center;
       margin-top: 5px;
       margin-bottom: 10px;
+      @media screen and (max-width: 900px) {
+        width: 100%;
+        font-size: 35px;
+        margin-bottom: 0;
+        margin-top: 0;
+      }
     }
 
     button {
@@ -63,6 +90,11 @@ const PageStyle = styled.div`
       height: 60px;
       width: 140px;
       transition: 0.2s;
+      @media screen and (max-width: 900px) {
+        width: 40%;
+        height: 50px;
+        margin: 5% 12px;
+      }
       &:hover {
         opacity: 0.85;
         box-shadow: 0px 5px 5px 0px rgba(176, 170, 176, 1);

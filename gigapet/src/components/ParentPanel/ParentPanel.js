@@ -15,6 +15,11 @@ const Panel = styled.div`
   border-radius: 10px;
   opacity: 0.925;
   padding-top: 20px;
+  @media screen and (max-width: 900px) {
+    width: 90vw;
+    height: 92.5vh;
+    opacity: 0.975;
+  }
   &:hover {
     opacity: 0.975;
     transition: 0.25s;
@@ -53,6 +58,9 @@ const Panel = styled.div`
       border-radius: 5px;
       font-size: 22px;
       letter-spacing: 2px;
+      @media screen and (max-width: 900px) {
+        font-size: 16px;
+      }
       i {
         color: #EA526F;
         margin-right: 10px;
@@ -66,6 +74,14 @@ const Panel = styled.div`
   img {
     width: 100px;
     height: 100px;
+  }
+
+  @media screen and (max-width: 900px) {
+    .user-panel {
+      padding: 5% 2.5% 5% 2.5%;
+      width: 35%;
+    }
+  }
 `;
 
 const ChildForm = styled.div`
@@ -120,6 +136,14 @@ const ChildForm = styled.div`
         border-radius: 5px;
         height: 30px;
       }
+    }
+  }
+
+  @media screen and (max-width: 900px) {
+    form {
+      width: 95%;
+      display: flex;
+      align-items: flex-end;
     }
   }
 `;

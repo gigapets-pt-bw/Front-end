@@ -17,6 +17,11 @@ border-radius: 5px;
     transition: 0.25s;
     opacity: 0.975;
 }
+@media screen and (max-width: 900px){
+    height: 90vh;
+    width: 90vw;
+    opacity: 0.975;
+}
 .panel-container {
     height: 100%;
     display: flex;
@@ -26,56 +31,6 @@ border-radius: 5px;
         border: 1px solid black;
         border-right: 2px solid black;
         width: 35%;
-        // form {
-        //     display: flex;
-        //     flex-direction: column;
-        //     padding: 5px;
-        //     display: flex;
-        //     width: 80%;
-        //     margin: 0 auto;
-        //     input {
-        //         font-family: 'Capriola', sans-serif;
-        //         height: 1.875rem;
-        //         margin: 5px 0;
-        //     }
-        //     select {
-        //         font-family: 'Capriola', sans-serif;
-        //         font-weight: bold;
-        //         margin: 5px 0;
-        //         height: 1.875rem;
-        //     }
-        //     .button-container {
-        //         display: flex;
-        //         flex-direction: row;
-        //         justify-content: space-evenly;
-        //         .add {
-        //             font-family: 'Capriola', sans-serif;
-        //             font-weight: bolder;
-        //             margin: 5px;
-        //             width: 100px;
-        //             height: 40px;
-        //             border-radius: 5px;
-        //             background: #8AC926;
-        //             cursor: pointer;
-        //             &:hover {
-        //                 background: #65931C;
-        //             }
-        //         }
-        //         .remove {
-        //             font-family: 'Capriola', sans-serif;
-        //             font-weight: bolder;
-        //             margin: 5px;
-        //             width: 100px;
-        //             height: 40px;
-        //             border-radius: 5px;
-        //             background: #ED7189;
-        //             cursor: pointer;
-        //             &:hover {
-        //                 background: #C0445B;
-        //             }
-        //         }
-        //     }
-        // }
         .food-inventory {
             display: flex;
             flex-wrap: wrap;
@@ -86,12 +41,25 @@ border-radius: 5px;
             border-bottom: 2px solid black;
             display: flex;
             justify-content: space-evenly;
+            @media screen and (max-width: 900px){
+                height: 80px;
+                align-items: center;
+            }
             img {
                 width: 64px;
                 height: 64px;
                 padding: 10px 2px 10px 4px;
                 opacity: 0.75;
                 cursor: pointer;
+                @media screen and (max-width: 1138px){
+                    width: 48px;
+                    height: 48px;
+                }
+                @media screen and (max-width: 900px) {
+                    width: 32px;
+                    height: 32px;
+                    padding: 5px 0px;
+                }
             }
             .active {
                 transition: 0.25s;
@@ -115,6 +83,9 @@ border-radius: 5px;
             font-size: 28px;
             font-weight: bolder;
             text-shadow: 1px 1px black;
+            @media screen and (max-width: 900px) {
+                padding: 0px 2px;
+            }
         }
         img {
             margin: 2% 0;
@@ -127,6 +98,10 @@ border-radius: 5px;
                 width: 32px;
                 height: 32px;
                 border-radius: 10px;
+                @media screen and (max-width: 900px) {
+                    width: 16px;
+                    height: 16px;
+                }
             }
             width: 50%;
             display: flex;

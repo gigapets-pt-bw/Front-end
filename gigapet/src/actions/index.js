@@ -89,7 +89,6 @@ export const createChild = (child, fetch) => dispatch => {
 }
 
 export const addFoodEntry = (newEntry, id) => dispatch => {
-  console.log(newEntry);
   return axiosWithAuth().post(`https://gigapets-pt-bw.herokuapp.com/api/foodentries`, newEntry).then(res => {
     axiosWithAuth().get(`https://gigapets-pt-bw.herokuapp.com/api/children/${id}/entries`).then(res => {
       dispatch({ type: ADD_ENTRY, payload: res.data });

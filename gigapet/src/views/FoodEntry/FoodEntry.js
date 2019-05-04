@@ -12,6 +12,10 @@ font-family: "Capriola", sans serif;
 font-size: 1rem;
 height: 3.125rem;
 font-weight: bold;
+@media screen and (max-width: 900px) {
+    width: 47.5%;
+    font-size: 0.7rem;
+}
 &:hover {
     transition: 0.2s;
     translation: scaley(1.05);

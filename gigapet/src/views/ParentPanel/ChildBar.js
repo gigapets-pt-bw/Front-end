@@ -18,6 +18,10 @@ const ChildBarStyle = styled.div`
     div {
         p {
             cursor: pointer;
+            @media screen and (max-width: 900px) {
+                width: 35%;
+                padding-right: 5px;
+            }
         }
         p:hover {
             transition: 0.25s;
@@ -35,6 +39,10 @@ const ChildBarStyle = styled.div`
             font-size: 22.5px;
             color: #EA526F;
             margin-right: 10px;
+            @media screen and (max-width: 900px) {
+                width: 35%;
+                font-size: 14px;
+            }
         }
         p {
             padding-bottom: 2px;
