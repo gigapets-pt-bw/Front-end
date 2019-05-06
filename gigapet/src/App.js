@@ -1,18 +1,24 @@
-import React from "react";
+import React, {Component} from "react";
 import { connect } from "react-redux";
 import "./App.css";
 import Login from "./components/Login/Login";
 import { Route } from "react-router-dom";
-import ParentPanel from "./components/Main/ParentPanel";
+import ParentPanel from "./components/ParentPanel/ParentPanel";
+import PrivateRoute from "./components/Login/PrivateRoute";
+import GigaPetPanel from "./components/GigaPetPanel/GigaPetPanel";
 
-function App(props) {
-  console.log(props.parents);
-  return (
-    <div className="App">
-      <Route path="/home" component={ParentPanel} />
-      <Route exact path="/" render={props => <Login {...props} />} />
-    </div>
-  );
+
+// We have our Login route unprotected, but other panels are through protected routes
+class App extends Component {
+  render(){
+    return (
+        <div className="App">
+          <Route exact path="/" component={Login} />
+          <PrivateRoute path="/home/giga" component={GigaPetPanel} />
+          <PrivateRoute exact path="/home" component={ParentPanel} />
+        </div>
+    );
+  }
 }
 
 const mapStateToProps = state => {

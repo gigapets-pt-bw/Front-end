@@ -1,5 +1,8 @@
 import React from 'react';
+import { currentChild, fetchFoodEntries } from '../../actions';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
+
 
 const ChildBarStyle = styled.div`
     border: 0.5px solid black;
@@ -11,6 +14,21 @@ const ChildBarStyle = styled.div`
     border-radius: 5px;
     background-color: white;
     opacity: 0.80;
+
+    div {
+        p {
+            cursor: pointer;
+            @media screen and (max-width: 900px) {
+                width: 35%;
+                padding-right: 5px;
+            }
+        }
+        p:hover {
+            transition: 0.25s;
+            transform: translateY(-4px);
+        }
+    }
+
     .view-child {
         display: flex;
         flex-direction: row;
@@ -21,6 +39,10 @@ const ChildBarStyle = styled.div`
             font-size: 22.5px;
             color: #EA526F;
             margin-right: 10px;
+            @media screen and (max-width: 900px) {
+                width: 35%;
+                font-size: 14px;
+            }
         }
         p {
             padding-bottom: 2px;
@@ -28,6 +50,7 @@ const ChildBarStyle = styled.div`
         }
     }
     .status {
+        font-family: "Capriola", sans serif;
         font-weight: bolder;
     }
     &:hover {
@@ -37,11 +60,17 @@ const ChildBarStyle = styled.div`
 `;
 
 const ChildBar = props => {
+    //Callback function to regulate action creator/app flow
+    function fetchEntries(currentChild) {
+        props.fetchFoodEntries(currentChild.id, props.redirect);
+    }
     return (
         <>
             <ChildBarStyle>
-                <p className="status">{`${props.name}\'s  Gigapet  ${props.petname}`}</p>
-                <div className="view-child">
+                <p className="status">{`${props.name}'s  Gigapet - ${props.gigapetName}`}</p>
+                <div onClick={() => { 
+                    props.currentChild(fetchEntries, props.children.filter(child => child.name === props.name), //need to pass props.id
+                    )}} className="view-child">
                     <i className="fas fa-eye"></i>
                     <p>View</p>
                 </div>
@@ -50,4 +79,12 @@ const ChildBar = props => {
     );
 }
 
-export default ChildBar
+
+const mapStateToProps = state => {
+    return {
+        children: state.children,
+        currentChild: state.currentChild
+    }
+}
+
+export default connect(mapStateToProps, { currentChild, fetchFoodEntries })(ChildBar);

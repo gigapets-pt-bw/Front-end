@@ -8,13 +8,30 @@ import {
   REGISTER_START,
   REGISTER_SUCCESS,
   REGISTER_FAILURE,
+  CREATECHILD_START,
+  CREATECHILD_SUCCESS,
+  CREATECHILD_FAILURE,
+  FETCH_CURRENT_CHILD,
+  ADD_ENTRY,
+  FETCH_ENTRIES
 } from "../actions";
 
 const initialState = {
-  user: { username: "Jill", password: "hentaiisart69"},
-  foods: ["fruit", "vegetable", "meat", "dairy", "candy", "greasy"],
+  //User object
+  user: {},
+  //Array of children based on 'parentId'
+  children: [],
+  //Child that has been clicked on in ParentPanel
+  currentChild: {},
+  //Food entries from DB
+  foodEntries : [],
+  //I dont even think we ever used this....
+  foods: ["fruit", "vegetable", "meat", "dairy"],
+  //Bools toggled during requests
   isFetching: false,
   isLoggingIn: false,
+  creatingChild: false,
+  //Strings for storing errors
   loginError: "",
   error: ""
 };
@@ -29,6 +46,7 @@ export const rootReducer = (state = initialState, action) => {
     case LOGIN_SUCCESS:
       return {
         ...state,
+        user: action.payload,
         isLoggingIn: false
       };
     case LOGIN_FAILURE:
@@ -41,19 +59,19 @@ export const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         isLoggingIn: true
-      }
+      };
     case REGISTER_SUCCESS:
       return {
         ...state,
         isLoggingIn: false,
         user: action.payload
-      }
+      };
     case REGISTER_FAILURE:
       return {
         ...state,
         isLoggingIn: false,
         error: action.payload
-      }
+      };
     case FETCH_DATA_START:
       return {
         ...state,
@@ -62,8 +80,8 @@ export const rootReducer = (state = initialState, action) => {
     case FETCH_DATA_SUCCESS:
       return {
         ...state,
-        isFetching: false
-        //Something something users: action.payload
+        isFetching: false,
+        children: action.payload
       };
     case FETCH_DATA_FAILURE:
       return {
@@ -71,28 +89,42 @@ export const rootReducer = (state = initialState, action) => {
         isFetching: false,
         error: "Failed to fetch..."
       };
+    case CREATECHILD_START:
+      return {
+        ...state,
+        creatingChild: true
+      };
+    case CREATECHILD_SUCCESS:
+      return {
+        ...state,
+        creatingChild: false,
+        children: [...state.children, action.payload]
+      };
+    case CREATECHILD_FAILURE:
+      return {
+        ...state,
+        creatingChild: false,
+        error: "Failed to fetch..."
+      };
+    case FETCH_CURRENT_CHILD:
+      return {
+        ...state,
+        currentChild: action.payload
+      }
+    case FETCH_ENTRIES:
+      let entries = action.array.filter(entry => entry.childId === action.id)
+      return {
+        ...state,
+        foodEntries: entries
+      }
+    case ADD_ENTRY:
+      return {
+        ...state,
+        foodEntries: action.payload
+      }
     default:
       return state;
   }
 };
 
 export default rootReducer;
-
-// Example user data structure
-// {
-//   username: "Ronny",
-//   password: "password1234",
-//   children: [
-//     {
-//       name:"Ludwick",
-//       gigapet: {},
-//       savedFoods: [
-//         {
-//           name: "tomato",
-//           date: "4/23/19",
-//           category: "vegetable"
-//         }
-//       ]
-//     }
-//   ]
-// }
