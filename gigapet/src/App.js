@@ -7,6 +7,8 @@ import ParentPanel from "./components/ParentPanel/ParentPanel";
 import PrivateRoute from "./components/Login/PrivateRoute";
 import GigaPetPanel from "./components/GigaPetPanel/GigaPetPanel";
 
+
+// We have our Login route unprotected, but other panels are through protected routes
 class App extends Component {
   render(){
     return (

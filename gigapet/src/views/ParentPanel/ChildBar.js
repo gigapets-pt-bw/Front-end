@@ -60,6 +60,7 @@ const ChildBarStyle = styled.div`
 `;
 
 const ChildBar = props => {
+    //Callback function to regulate action creator/app flow
     function fetchEntries(currentChild) {
         props.fetchFoodEntries(currentChild.id, props.redirect);
     }

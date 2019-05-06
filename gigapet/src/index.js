@@ -9,6 +9,8 @@ import logger from "redux-logger";
 import thunk from "redux-thunk";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
+
+// This is so our Redux dev tools in browser will work.
 const composeEnhancers =
   typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
     ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
@@ -19,6 +21,7 @@ const composeEnhancers =
 const enhancer = composeEnhancers(applyMiddleware(thunk, logger));
 const store = createStore(rootReducer, enhancer);
 
+// App is a SPA
 ReactDOM.render(
   <Provider store={store}>
     <Router>

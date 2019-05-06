@@ -150,8 +150,10 @@ const ChildForm = styled.div`
 
 class ParentPanel extends Component {
   state = {
+    //Strings to hold controlled input values
     name: "",
     gigapet: "",
+    //Boolean to toggle form for creating child/gigapet
     newChild: false
   };
 
@@ -159,14 +161,15 @@ class ParentPanel extends Component {
     this.setState({[event.target.name]: event.target.value});
   }
 
+  //Callback functions to regulate action creator firing/app flow
   fetch = event => {
     this.props.fetchChildren(this.props.user.id);
   }
-
   gigaLink = event => {
     this.props.history.push('/home/giga');
   }
 
+  //Function for setting up object to be passed into action creator for POST request to make new child
   createChild = event => {
     event.preventDefault();
     let newChild = {
@@ -182,18 +185,18 @@ class ParentPanel extends Component {
     })
   }
 
+  //Toggles bool in state so form will appear/dissapear for creating child/gigapet
   createChildButton = event => {
     event.preventDefault();
     this.setState({newChild: true});
   }
-
   backButton = event => {
     event.preventDefault();
     this.setState({newChild: false});
   }
 
   render() {
-
+    //Instantiating a variable that holds JSX so we can perform ternary to manipulate the view
     let newChildForm = 
       <ChildForm>
         <form onSubmit={this.createChild}>

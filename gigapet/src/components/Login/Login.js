@@ -113,43 +113,50 @@ const PageStyle = styled.div`
 
 class Login extends React.Component {
   state = {
+    //Login form object based on user input
     login: {
       username: "",
       password: ""
     },
+    //Signup form object based on user input
     signup: {
       username: "",
       password: ""
     },
+    // For toggling between signup/login form
     newSignup: false
   };
 
+  //Changes login object in state based on a controlled input
   inputHandlerLogin = event => {
     this.setState({
       login: { ...this.state.login, [event.target.name]: event.target.value }
     });
   };
 
+  //Changes signup object in state based on a controlled input
   inputHandlerSignup = event => {
     this.setState({
       signup: { ...this.state.signup, [event.target.name]: event.target.value }
     });
   };
 
+  //Callback functions to regulate action creator firing/app flow
   redirect = event => {
     this.props.history.push('/home');
   }
-
   fetch = event => {
     this.props.fetchChildren(this.props.user.id);
   }
 
+  //Function to fire our login action creator, and reset login object in state
   loginHandler = event => {
     event.preventDefault();
     this.props.login(this.state.login, this.redirect, this.fetch);
     this.setState({ login: { username: "", password: "" } });
   };
 
+  //Function to fire our signup action creator, and reset signup object in state
   signupHandler = event => {
     event.preventDefault();
     this.props.register(this.state.signup, this.redirect, this.fetch);
@@ -159,17 +166,18 @@ class Login extends React.Component {
     });
   };
 
+  //Functions for toggling between signup/login forms
   backButton = event => {
     event.preventDefault();
     this.setState({newSignup: false});
   }
-
   signupButton = event => {
     event.preventDefault();
     this.setState({ newSignup: true });
   };
 
   render() {
+    //We instantiate a variable to contain the JSX for login/signup so that we can perform ternary below
     let loginform =
         <PageStyle>
           <form onSubmit={this.loginHandler}>
@@ -225,6 +233,7 @@ class Login extends React.Component {
         </PageStyle>
         
         return (
+          //Ternary for toggling between signup/login form
           <>
           { this.state.newSignup ? signupform : loginform }
           </>

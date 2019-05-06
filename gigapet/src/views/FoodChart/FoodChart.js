@@ -28,6 +28,7 @@ class Chart extends Component {
         dayWeekMonth: 'day'
     }
     
+    // Function for filtering our food entries based on day/week/month
     filterDate = event => {
         const today = new Date().toISOString().split('')
         switch(this.state.dayWeekMonth) {
@@ -67,6 +68,7 @@ class Chart extends Component {
         }
     }
 
+    //This function calculates our percentages of food eaten per category
     calculateData = (foods) => {
         if (foods.length===0) {
             return [1, 1, 1, 1]
@@ -91,7 +93,6 @@ class Chart extends Component {
     
     render() {
         const datedFoods = this.filterDate();
-        console.log(datedFoods);
         return (
                 <ChartWrapper>
                     <RadioButtons className="change-chart">
@@ -113,6 +114,7 @@ class Chart extends Component {
                         data={{
                             labels: ['Meat', 'Vegetables', 'Fruit', 'Dairy'],
                             datasets: [{
+                                //We call our calculateData function with our filtered foods based on date
                                 data: this.calculateData(datedFoods), 
                                 backgroundColor: [
                                     '#EA526F',

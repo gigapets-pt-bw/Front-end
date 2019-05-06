@@ -17,14 +17,21 @@ import {
 } from "../actions";
 
 const initialState = {
+  //User object
   user: {},
+  //Array of children based on 'parentId'
   children: [],
+  //Child that has been clicked on in ParentPanel
   currentChild: {},
+  //Food entries from DB
   foodEntries : [],
+  //I dont even think we ever used this....
   foods: ["fruit", "vegetable", "meat", "dairy"],
+  //Bools toggled during requests
   isFetching: false,
   isLoggingIn: false,
   creatingChild: false,
+  //Strings for storing errors
   loginError: "",
   error: ""
 };

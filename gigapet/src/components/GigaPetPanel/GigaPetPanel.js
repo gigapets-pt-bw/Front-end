@@ -120,8 +120,11 @@ border-radius: 5px;
 
 class GigaPetPanel extends Component {
     state = {
+        //Foods array to fill inventory after CDM
         foods : [],
+        //String to regulate food category tab
         displayFood : "",
+        //Bools to figure out when GP is full
         hasEatenMeat : false,
         hasEatenFruit : false,
         hasEatenDairy : false,
@@ -131,19 +134,20 @@ class GigaPetPanel extends Component {
     }
 
     componentDidMount = event => {
+        //Fetching all food options
         axiosWithAuth().get('https://gigapets-pt-bw.herokuapp.com/api/foods').then(res => 
             this.setState({foods: res.data})
         )
         .catch(error => console.log(error));
-        // console.log(this.calculateData());
     }
 
+    //Function for handling switching between food category tabs
     switchHandler(food) {
         this.setState({ displayFood: food })
     }
     
-    
-    
+    //Function for handling when a food is clicked, fires action creator for POST request for new
+    //food entry and sets up our food entry object, our switch statement handles bools in state
     foodHandler = (food, id) => {
         let newEntry = {
             childId : id,
@@ -193,6 +197,7 @@ class GigaPetPanel extends Component {
     // }
     
     render(){
+        //We filter our foods here upon re-render based on food category tab clicked.
         let filteredFoods = this.state.foods.filter(food => food.categoryId === this.state.displayFood);
         return (
             <GigapetContainerStyle>

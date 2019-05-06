@@ -24,6 +24,7 @@ font-weight: bold;
 `;
 
 function FoodEntry (props) {
+    //clickHelper is a helper function that can pass up data for creating new food entry
     return (
         <FoodCardStyle onClick={() => { props.clickHelper(props.food, props.childId)}}>
                 {props.food.name}
